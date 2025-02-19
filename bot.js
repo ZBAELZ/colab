@@ -1,24 +1,13 @@
-const puppeteer = require('puppeteer');
+const keepServerAlive = () => {
+  setInterval(() => {
+    axios.get('https://colab.research.google.com/drive/1jxnXJIPDM5DRw6Le4Wd2TCsKfgNAhTjp?usp=sharing')  // Reemplaza con la URL de tu servidor de Aternos
+      .then(response => {
+        console.log("Solicitud exitosa, el servidor sigue activo.");
+      })
+      .catch(error => {
+        console.error("Error al mantener el servidor activo:", error);
+      });
+  }, 5 * 60 * 1000);  // Enviar una solicitud cada 5 minutos
+};
 
-async function keepColabAlive() {
-  const browser = await puppeteer.launch({
-    headless: false, // Cambia a 'true' para ejecutar en modo sin cabeza
-    args: ['--no-sandbox', '--disable-dev-shm-usage']
-  });
-
-  const page = await browser.newPage();
-  await page.goto('https://colab.research.google.com/drive/1jxnXJIPDM5DRw6Le4Wd2TCsKfgNAhTjp?usp=sharing');
-
-  // Mantener la página activa mediante desplazamiento
-  setInterval(async () => {
-    console.log("Simulando desplazamiento...");
-    await page.evaluate(() => {
-      window.scrollTo(0, document.body.scrollHeight);  // Desplazar al final de la página
-    });
-  }, 60000);  // Desplazamiento cada minuto
-
-  // Mantener el navegador abierto
-  console.log("Colab está activo...");
-}
-
-keepColabAlive();
+keepServerAlive();
