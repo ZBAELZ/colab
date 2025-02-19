@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const keepServerAlive = () => {
   setInterval(() => {
     axios.get('https://colab.research.google.com/drive/1jxnXJIPDM5DRw6Le4Wd2TCsKfgNAhTjp?usp=sharing')  // Reemplaza con la URL de tu servidor de Aternos
